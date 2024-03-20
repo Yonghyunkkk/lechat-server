@@ -166,7 +166,8 @@ public class AuthService {
     }
 
     private String generateConfirmationLink(String token){
-        return "<a href=http://localhost:8080/api/v1/auth/confirm-email?token="+token+">Confirm Email</a>";
+        final String confirmLink = "http://localhost:8080/api/v1/auth/confirm-email?token="+token;
+        return "<a href=" + confirmLink +">Confirm Email</a>";
     }
 
     public boolean verifyEmail(String token) {
