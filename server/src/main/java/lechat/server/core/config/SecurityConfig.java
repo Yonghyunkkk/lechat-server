@@ -46,7 +46,9 @@ public class SecurityConfig {
                         .accessDeniedHandler(jwtAccessDeniedHandler))
                 .authorizeHttpRequests(authorize -> authorize
                         // 해당 api에 대해서는 모든 요청을 허가
-                        .requestMatchers("/api/v1/auth/**",
+                        .requestMatchers(
+                                "/**",
+                                "/api/v1/auth/**",
                                 "/api/v1/**",
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**").permitAll()
