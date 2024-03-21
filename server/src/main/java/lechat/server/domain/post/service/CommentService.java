@@ -7,6 +7,7 @@ import lechat.server.domain.member.entity.Member;
 import lechat.server.domain.member.respository.MemberRepository;
 import lechat.server.domain.post.controller.request.CreateCommentReq;
 import lechat.server.domain.post.controller.request.CreatePostReq;
+import lechat.server.domain.post.controller.request.UpdateCommentReq;
 import lechat.server.domain.post.controller.response.CreateCommentRes;
 import lechat.server.domain.post.controller.response.CreatePostRes;
 import lechat.server.domain.post.entity.Comment;
@@ -44,6 +45,21 @@ public class CommentService {
         Comment savedComment = commentRepository.save(comment);
 
         return new CreateCommentRes(savedComment.getId());
+    }
+
+    @Transactional
+    public void updateComment(Long memberId, Long commentId, UpdateCommentReq request) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new CustomException(MEMBER_NOT_FOUND));
+
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new CustomException(COMMENT_NOT_FOUND));
+
+        if (!Objects.equals(comment.getMember().getId(), memberId)) {
+            throw new CustomException(UNAUTHORIZED_OPERATION);
+        }
+
+        comment.updateComment(request.getContent());
     }
 
     @Transactional
