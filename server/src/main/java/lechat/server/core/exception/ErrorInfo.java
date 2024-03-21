@@ -30,9 +30,9 @@ public enum ErrorInfo {
      */
     POST_NOT_FOUND(400, "POST_NOT_FOUND", "Post with the given id is not found"),
     /**
-     * Subclass
+     * Comment
      */
-    SUBCLASS_NOT_FOUND(400, "SUBCLASS_NOT_FOUND", "Subclass with given courseId is not found");
+    COMMENT_NOT_FOUND(400, "COMMENT_NOT_FOUND", "Comment with given id is not found");
 
 
     private final int statusCode;
