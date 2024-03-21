@@ -5,6 +5,7 @@ import lechat.server.domain.member.entity.Member;
 import lechat.server.domain.member.respository.MemberRepository;
 import lechat.server.domain.post.controller.request.CreateCommentReq;
 import lechat.server.domain.post.controller.request.CreateReplyCommentReq;
+import lechat.server.domain.post.controller.request.UpdateReplyCommentReq;
 import lechat.server.domain.post.controller.response.CreateCommentRes;
 import lechat.server.domain.post.controller.response.CreateReplyCommentRes;
 import lechat.server.domain.post.entity.Comment;
@@ -47,6 +48,21 @@ public class ReplyCommentService {
     }
 
     @Transactional
+    public void updateReplyComment(Long memberId, Long replyCommentId, UpdateReplyCommentReq request) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new CustomException(MEMBER_NOT_FOUND));
+
+        ReplyComment replyComment = replyCommentRepository.findById(replyCommentId)
+                .orElseThrow(() -> new CustomException(REPLY_COMMENT_NOT_FOUND));
+
+        if (!Objects.equals(replyComment.getMember().getId(), memberId)) {
+            throw new CustomException(UNAUTHORIZED_OPERATION);
+        }
+
+        replyComment.updateReplyComment(request.getContent());
+    }
+
+    @Transactional
     public void deleteReplyComment(Long memberId, Long replyCommentId) {
         ReplyComment replyComment = replyCommentRepository.findById(replyCommentId)
                 .orElseThrow(() -> new CustomException(REPLY_COMMENT_NOT_FOUND));
@@ -57,4 +73,6 @@ public class ReplyCommentService {
 
         replyCommentRepository.delete(replyComment);
     }
+
+
 }
