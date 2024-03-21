@@ -26,11 +26,9 @@ public enum ErrorInfo {
     FAVORITE_COURSE_ALREADY_EXIST(400, "FAVORITE_COURSE_ALREADY_EXIST", "This course is already a favorite course"),
 
     /**
-     * Course Review
+     * Post
      */
-    REVIEW_NOT_FOUND(400, "REVIEW_NOT_FOUND", "Review with the given id is not found"),
-    REVIEW_ALREADY_EXIST(400, "REVIEW_ALREADY_EXIST", "Member has already left a review for course"),
-    TOTAL_RATIO_EXCEEDS(400, "TOTAL_RATIO_EXCEEDS", "Total ratio has exceeded 100"),
+    POST_NOT_FOUND(400, "POST_NOT_FOUND", "Post with the given id is not found"),
     /**
      * Subclass
      */
