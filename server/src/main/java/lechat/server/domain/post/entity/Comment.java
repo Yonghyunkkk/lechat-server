@@ -1,13 +1,10 @@
 package lechat.server.domain.post.entity;
 
 import jakarta.persistence.*;
-import lechat.server.domain.course.entity.Course;
 import lechat.server.domain.member.entity.Member;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 import static jakarta.persistence.FetchType.LAZY;
 
@@ -16,10 +13,10 @@ import static jakarta.persistence.FetchType.LAZY;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class Post {
+public class Comment {
 
     @Id @GeneratedValue
-    @Column(name = "post_id")
+    @Column(name = "comment_id")
     private Long id;
 
     @Setter
@@ -29,8 +26,8 @@ public class Post {
 
     @Setter
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "course_id", nullable = false)
-    private Course course;
+    @JoinColumn(name = "post_id", nullable = false)
+    private Post post;
 
     @Column(name = "content", nullable = false, length = 1000)
     private String content;
@@ -38,32 +35,23 @@ public class Post {
     @Column(name = "created_at", nullable = false)
     private LocalDate createdAt;
 
-    @OneToMany(mappedBy = "post")
-    @Builder.Default
-    private List<Comment> comments = new ArrayList<>();
-
-    public static Post createPost(
+    public static Comment createComment(
             Member member,
-            Course course,
+            Post post,
             String content,
             LocalDate createdAt
     ) {
-        Post post = Post.builder()
+        Comment comment = Comment.builder()
                 .member(member)
-                .course(course)
+                .post(post)
                 .content(content)
                 .createdAt(createdAt)
                 .build();
 
-        member.addPost(post);
-        course.addPost(post);
+        post.addComments(comment);
+        member.addComment(comment);
 
-        return post;
-    }
-
-    public void addComments(Comment comment) {
-        this.comments.add(comment);
-        comment.setPost(this);
+        return comment;
     }
 
 }
