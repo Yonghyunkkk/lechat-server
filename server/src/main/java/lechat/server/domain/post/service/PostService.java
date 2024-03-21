@@ -15,9 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
-import static lechat.server.core.exception.ErrorInfo.COURSE_NOT_FOUND;
-import static lechat.server.core.exception.ErrorInfo.MEMBER_NOT_FOUND;
+import static lechat.server.core.exception.ErrorInfo.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -41,5 +41,17 @@ public class PostService {
         Post savedPost = postRepository.save(post);
 
         return new CreatePostRes(savedPost.getId());
+    }
+
+    @Transactional
+    public void deletePost(Long memberId, Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new CustomException(POST_NOT_FOUND));
+
+        if (!Objects.equals(post.getMember().getId(), memberId)) {
+            throw new CustomException(UNAUTHORIZED_OPERATION);
+        }
+
+        postRepository.delete(post);
     }
 }
