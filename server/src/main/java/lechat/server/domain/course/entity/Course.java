@@ -32,8 +32,8 @@ public class Course {
     private SemesterType semester;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "day")
-    private DayType day;
+    @Column(name = "day_of_week")
+    private DayType dayOfWeek;
 
     @Column(name = "start_time")
     private LocalTime startTime;
@@ -45,7 +45,7 @@ public class Course {
             String courseCode,
             String courseName,
             SemesterType semester,
-            DayType day,
+            DayType dayOfWeek,
             LocalTime startTime,
             LocalTime endTime
     ) {
@@ -53,7 +53,7 @@ public class Course {
                 .courseCode(courseCode)
                 .courseName(courseName)
                 .semester(semester)
-                .day(day)
+                .dayOfWeek(dayOfWeek)
                 .startTime(startTime)
                 .endTime(endTime)
                 .build();
