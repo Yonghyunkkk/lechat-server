@@ -61,6 +61,10 @@ public class Comment {
         return comment;
     }
 
+    public void updateComment(String content) {
+        this.content = content;
+    }
+
     public void addReplyComments(ReplyComment replyComment) {
         this.replyComments.add(replyComment);
         replyComment.setComment(this);

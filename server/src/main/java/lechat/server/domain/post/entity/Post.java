@@ -62,6 +62,10 @@ public class Post {
         return post;
     }
 
+    public void updatePost(String content) {
+        this.content = content;
+    }
+
     public void addComments(Comment comment) {
         this.comments.add(comment);
         comment.setPost(this);

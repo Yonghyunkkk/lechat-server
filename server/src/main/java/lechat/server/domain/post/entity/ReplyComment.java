@@ -55,4 +55,8 @@ public class ReplyComment {
 
         return replyComment;
     }
+
+    public void updateReplyComment(String content) {
+        this.content = content;
+    }
 }

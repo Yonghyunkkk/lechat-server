@@ -7,6 +7,7 @@ import lechat.server.domain.course.repository.CourseRepository;
 import lechat.server.domain.member.entity.Member;
 import lechat.server.domain.member.respository.MemberRepository;
 import lechat.server.domain.post.controller.request.CreatePostReq;
+import lechat.server.domain.post.controller.request.UpdatePostReq;
 import lechat.server.domain.post.controller.response.CreatePostRes;
 import lechat.server.domain.post.entity.Post;
 import lechat.server.domain.post.repository.PostRepository;
@@ -44,6 +45,21 @@ public class PostService {
     }
 
     @Transactional
+    public void updatePost(Long memberId, Long postId, UpdatePostReq request) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new CustomException(MEMBER_NOT_FOUND));
+
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new CustomException(POST_NOT_FOUND));
+
+        if (!Objects.equals(post.getMember().getId(), memberId)) {
+            throw new CustomException(UNAUTHORIZED_OPERATION);
+        }
+
+        post.updatePost(request.getContent());
+    }
+
+    @Transactional
     public void deletePost(Long memberId, Long postId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new CustomException(POST_NOT_FOUND));
@@ -54,4 +70,5 @@ public class PostService {
 
         postRepository.delete(post);
     }
+
 }

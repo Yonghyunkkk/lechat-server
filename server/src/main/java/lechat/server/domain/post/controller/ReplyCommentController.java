@@ -28,4 +28,11 @@ public class ReplyCommentController {
         CreateReplyCommentRes responseBody = replyCommentService.createReplyComment(request, 1L);
         return ResponseEntity.status(HttpStatus.CREATED).body(responseBody);
     }
+
+    @DeleteMapping("/reply-comments/{replyCommentId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Delete a reply comment")
+    public void deleteEvent(@PathVariable(name = "replyCommentId") Long replyCommentId) {
+        replyCommentService.deleteReplyComment(1L, replyCommentId);
+    }
 }

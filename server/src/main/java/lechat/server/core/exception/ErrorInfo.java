@@ -32,7 +32,11 @@ public enum ErrorInfo {
     /**
      * Comment
      */
-    COMMENT_NOT_FOUND(400, "COMMENT_NOT_FOUND", "Comment with given id is not found");
+    COMMENT_NOT_FOUND(400, "COMMENT_NOT_FOUND", "Comment with given id is not found"),
+    /**
+     * Reply Comment
+     */
+    REPLY_COMMENT_NOT_FOUND(400, "REPLY_COMMENT_NOT_FOUND", "Reply comment with given id is not found");
 
 
     private final int statusCode;

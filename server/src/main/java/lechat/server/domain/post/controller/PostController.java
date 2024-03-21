@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lechat.server.domain.post.controller.request.CreatePostReq;
+import lechat.server.domain.post.controller.request.UpdatePostReq;
 import lechat.server.domain.post.controller.response.CreatePostRes;
 import lechat.server.domain.post.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -27,12 +28,18 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.CREATED).body(responseBody);
     }
 
+    @PatchMapping("/posts/{postId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Update a post")
+    public void updateEvent(@PathVariable(name = "postId") Long postId, @RequestBody UpdatePostReq request) {
+        postService.updatePost(1L, postId, request);
+    }
+
     @DeleteMapping("/posts/{postId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Delete a post")
     public void deleteEvent(@PathVariable(name = "postId") Long postId) {
         postService.deletePost(1L, postId);
     }
-
 
 }

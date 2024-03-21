@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import static lechat.server.core.exception.ErrorInfo.*;
 
@@ -43,5 +44,17 @@ public class ReplyCommentService {
         ReplyComment savedReplyComment = replyCommentRepository.save(replyComment);
 
         return new CreateReplyCommentRes(savedReplyComment.getId());
+    }
+
+    @Transactional
+    public void deleteReplyComment(Long memberId, Long replyCommentId) {
+        ReplyComment replyComment = replyCommentRepository.findById(replyCommentId)
+                .orElseThrow(() -> new CustomException(REPLY_COMMENT_NOT_FOUND));
+
+        if (!Objects.equals(replyComment.getMember().getId(), memberId)) {
+            throw new CustomException(UNAUTHORIZED_OPERATION);
+        }
+
+        replyCommentRepository.delete(replyComment);
     }
 }
