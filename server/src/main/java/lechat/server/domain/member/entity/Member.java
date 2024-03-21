@@ -93,6 +93,22 @@ public class Member implements UserDetails {
 //        emailValidation.setMember(this);
 //    }
 
+    public static Member createMember(
+            String name,
+            String email,
+            String password,
+            Role role
+    ) {
+        Member member = Member.builder()
+                .name(name)
+                .email(email)
+                .password(password)
+                .role(role)
+                .build();
+
+        return member;
+    }
+
     public void addPost(Post post) {
         this.posts.add(post);
         post.setMember(this);

@@ -5,6 +5,7 @@ import lechat.server.domain.member.entity.Member;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static jakarta.persistence.FetchType.LAZY;
 
@@ -34,13 +35,13 @@ public class ReplyComment {
     private String content;
 
     @Column(name = "created_at", nullable = false)
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
 
     public static ReplyComment createReplyComment(
             Member member,
             Comment comment,
             String content,
-            LocalDate createdAt
+            LocalDateTime createdAt
     ) {
         ReplyComment replyComment = ReplyComment.builder()
                 .member(member)

@@ -22,12 +22,12 @@ import java.util.Map;
 
 @Tag(name = "1. Authorization")
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
 
-    @PostMapping("/signup")
+    @PostMapping("/auth/signup")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "create user account")
     public ResponseEntity<Member> signup(@Valid @RequestBody MemberReq memberRequest, Errors errors) {
@@ -41,28 +41,28 @@ public class AuthController {
         return ResponseEntity.ok(authService.signup(memberRequest));
     }
 
-    @PostMapping("/login")
+    @PostMapping("/auth/login")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "user login")
     public ResponseEntity<JwtTokenDto> login(@RequestBody LoginReq loginRequest) {
         return ResponseEntity.ok(authService.login(loginRequest));
     }
 
-    @PostMapping("/reissue")
+    @PostMapping("/auth/reissue")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "reissue access token ")
     public ResponseEntity<JwtTokenDto> reissue(@RequestBody JwtTokenReq tokenRequest) {
         return ResponseEntity.ok(authService.reissue(tokenRequest));
     }
 
-    @PostMapping("/validation-code")
+    @PostMapping("/auth/validation-code")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Send email validation")
     public void sendEmailValidation(@RequestBody EmailValReq request) throws MessagingException {
         authService.sendEmailValidation(request.getEmail());
     }
 
-    @GetMapping("/confirm-email")
+    @GetMapping("/auth/confirm-email")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @Operation(summary = "Confirm email validation")
     public ResponseEntity<?> confirmEmail(@RequestParam("token") String token) {

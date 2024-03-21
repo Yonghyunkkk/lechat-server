@@ -5,6 +5,7 @@ import lechat.server.domain.member.entity.Member;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class Comment {
     private String content;
 
     @Column(name = "created_at", nullable = false)
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "comment")
     @Builder.Default
@@ -45,7 +46,7 @@ public class Comment {
             Member member,
             Post post,
             String content,
-            LocalDate createdAt
+            LocalDateTime createdAt
     ) {
         Comment comment = Comment.builder()
                 .member(member)

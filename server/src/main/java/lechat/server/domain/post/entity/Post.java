@@ -6,6 +6,7 @@ import lechat.server.domain.member.entity.Member;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class Post {
     private String content;
 
     @Column(name = "created_at", nullable = false)
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "post")
     @Builder.Default
@@ -46,7 +47,7 @@ public class Post {
             Member member,
             Course course,
             String content,
-            LocalDate createdAt
+            LocalDateTime createdAt
     ) {
         Post post = Post.builder()
                 .member(member)

@@ -18,24 +18,24 @@ import java.util.List;
 @Tag(name = "2. Courses")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/courses")
+@RequestMapping("/api/v1")
 public class CourseController {
 
     private final CourseService courseService;
 
-    @GetMapping("/in-schedule")
+    @GetMapping("/courses/in-schedule")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get courses in schedule")
     public ResponseEntity<List<CoursesRes>> getCoursesInSchedule() {
-        List<CoursesRes> coursesInSchedule = courseService.getCoursesInSchedule();
-        return ResponseEntity.ok().body(coursesInSchedule);
+        List<CoursesRes> responseBody = courseService.getCoursesInSchedule();
+        return ResponseEntity.ok().body(responseBody);
     }
 
-    @GetMapping("/not-in-schedule")
+    @GetMapping("/courses/not-in-schedule")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get courses not in schedule")
     public ResponseEntity<List<CoursesRes>> getCoursesNotInSchedule() {
-        List<CoursesRes> coursesNotInSchedule = courseService.getCoursesNotInSchedule();
-        return ResponseEntity.ok().body(coursesNotInSchedule);
+        List<CoursesRes> responseBody = courseService.getCoursesNotInSchedule();
+        return ResponseEntity.ok().body(responseBody);
     }
 }
