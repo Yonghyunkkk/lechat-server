@@ -5,20 +5,19 @@ import lechat.server.domain.member.entity.Member;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 import static jakarta.persistence.FetchType.LAZY;
 
+@Getter
 @Entity
 @Builder
-@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class Comment {
+public class ReplyComment {
 
-    @Id @GeneratedValue
-    @Column(name = "comment_id")
+    @Id
+    @GeneratedValue
+    @Column(name = "reply_comment_id")
     private Long id;
 
     @Setter
@@ -28,8 +27,8 @@ public class Comment {
 
     @Setter
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "post_id", nullable = false)
-    private Post post;
+    @JoinColumn(name = "comment_id", nullable = false)
+    private Comment comment;
 
     @Column(name = "content", nullable = false, length = 1000)
     private String content;
@@ -37,32 +36,22 @@ public class Comment {
     @Column(name = "created_at", nullable = false)
     private LocalDate createdAt;
 
-    @OneToMany(mappedBy = "comment")
-    @Builder.Default
-    private List<ReplyComment> replyComments = new ArrayList<>();
-
-    public static Comment createComment(
+    public static ReplyComment createReplyComment(
             Member member,
-            Post post,
+            Comment comment,
             String content,
             LocalDate createdAt
     ) {
-        Comment comment = Comment.builder()
+        ReplyComment replyComment = ReplyComment.builder()
                 .member(member)
-                .post(post)
+                .comment(comment)
                 .content(content)
                 .createdAt(createdAt)
                 .build();
 
-        post.addComments(comment);
-        member.addComment(comment);
+        comment.addReplyComments(replyComment);
+        member.addReplyComment(replyComment);
 
-        return comment;
+        return replyComment;
     }
-
-    public void addReplyComments(ReplyComment replyComment) {
-        this.replyComments.add(replyComment);
-        replyComment.setComment(this);
-    }
-
 }

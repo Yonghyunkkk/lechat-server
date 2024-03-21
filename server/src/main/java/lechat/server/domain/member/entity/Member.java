@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lechat.server.domain.auth.entity.EmailValidation;
 import lechat.server.domain.post.entity.Comment;
 import lechat.server.domain.post.entity.Post;
+import lechat.server.domain.post.entity.ReplyComment;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -47,6 +48,10 @@ public class Member implements UserDetails {
     @OneToMany(mappedBy = "member")
     @Builder.Default
     private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    @Builder.Default
+    private List<ReplyComment> replyComments = new ArrayList<>();
 
 
 //    @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
@@ -96,5 +101,10 @@ public class Member implements UserDetails {
     public void addComment(Comment comment) {
         this.comments.add(comment);
         comment.setMember(this);
+    }
+
+    public void addReplyComment(ReplyComment replyComment) {
+        this.replyComments.add(replyComment);
+        replyComment.setMember(this);
     }
 }
