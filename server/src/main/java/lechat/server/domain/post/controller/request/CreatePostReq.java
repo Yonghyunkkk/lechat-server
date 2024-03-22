@@ -14,6 +14,10 @@ public class CreatePostReq {
     private Long courseId;
 
     @NotBlank
+    @Schema(example = "What is the answer for this?")
+    private String title;
+
+    @NotBlank
     @Schema(example = "What is the 3 times 4?")
     private String content;
 }

@@ -9,6 +9,7 @@ import lechat.server.domain.member.respository.MemberRepository;
 import lechat.server.domain.post.controller.request.CreatePostReq;
 import lechat.server.domain.post.controller.request.UpdatePostReq;
 import lechat.server.domain.post.controller.response.CreatePostRes;
+import lechat.server.domain.post.controller.response.GetAllPostsRes;
 import lechat.server.domain.post.entity.Post;
 import lechat.server.domain.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 import static lechat.server.core.exception.ErrorInfo.*;
@@ -37,7 +39,7 @@ public class PostService {
         Course course = courseRepository.findById(request.getCourseId())
                 .orElseThrow(() -> new CustomException(COURSE_NOT_FOUND));
 
-        Post post = Post.createPost(member, course, request.getContent(), LocalDateTime.now());
+        Post post = Post.createPost(member, course, request.getTitle(), request.getContent(), LocalDateTime.now());
 
         Post savedPost = postRepository.save(post);
 
@@ -71,4 +73,10 @@ public class PostService {
         postRepository.delete(post);
     }
 
+    public List<GetAllPostsRes> getAllPosts(Long courseId) {
+        courseRepository.findById(courseId)
+                .orElseThrow(() -> new CustomException(COURSE_NOT_FOUND));
+
+        return postRepository.findByCourseId(courseId);
+    }
 }

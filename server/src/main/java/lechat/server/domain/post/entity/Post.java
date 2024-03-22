@@ -33,6 +33,9 @@ public class Post {
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
+    @Column(name = "title", nullable = false, length = 100)
+    private String title;
+
     @Column(name = "content", nullable = false, length = 1000)
     private String content;
 
@@ -46,11 +49,13 @@ public class Post {
     public static Post createPost(
             Member member,
             Course course,
+            String title,
             String content,
             LocalDateTime createdAt
     ) {
         Post post = Post.builder()
                 .member(member)
+                .title(title)
                 .course(course)
                 .content(content)
                 .createdAt(createdAt)

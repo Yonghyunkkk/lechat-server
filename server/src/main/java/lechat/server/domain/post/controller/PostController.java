@@ -6,11 +6,14 @@ import jakarta.validation.Valid;
 import lechat.server.domain.post.controller.request.CreatePostReq;
 import lechat.server.domain.post.controller.request.UpdatePostReq;
 import lechat.server.domain.post.controller.response.CreatePostRes;
+import lechat.server.domain.post.controller.response.GetAllPostsRes;
 import lechat.server.domain.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Tag(name = "3. Posts")
 @RestController
@@ -42,4 +45,11 @@ public class PostController {
         postService.deletePost(1L, postId);
     }
 
+    @GetMapping("/posts/{courseId}")
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Get all posts for course")
+    public ResponseEntity<List<GetAllPostsRes>> getAllPosts(@PathVariable(name = "courseId") Long courseId) {
+        List<GetAllPostsRes> responseBody = postService.getAllPosts(courseId);
+        return ResponseEntity.ok().body(responseBody);
+    }
 }
