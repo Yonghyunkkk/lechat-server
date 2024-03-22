@@ -58,7 +58,7 @@ public class PostService {
             throw new CustomException(UNAUTHORIZED_OPERATION);
         }
 
-        post.updatePost(request.getContent());
+        post.updatePost(request.getTitle(), request.getContent());
     }
 
     @Transactional
@@ -73,10 +73,10 @@ public class PostService {
         postRepository.delete(post);
     }
 
-    public List<GetAllPostsRes> getAllPosts(Long courseId) {
+    public List<GetAllPostsRes> getAllPosts(Long courseId, Long memberId) {
         courseRepository.findById(courseId)
                 .orElseThrow(() -> new CustomException(COURSE_NOT_FOUND));
 
-        return postRepository.findByCourseId(courseId);
+        return postRepository.findByCourseId(courseId, memberId);
     }
 }

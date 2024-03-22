@@ -49,7 +49,7 @@ public class PostController {
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get all posts for course")
     public ResponseEntity<List<GetAllPostsRes>> getAllPosts(@PathVariable(name = "courseId") Long courseId) {
-        List<GetAllPostsRes> responseBody = postService.getAllPosts(courseId);
+        List<GetAllPostsRes> responseBody = postService.getAllPosts(courseId, 1L);
         return ResponseEntity.ok().body(responseBody);
     }
 }

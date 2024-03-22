@@ -10,8 +10,11 @@ import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-    @Query("select new lechat.server.domain.post.controller.response.GetAllPostsRes(p.id, p.member.name, p.title, p.content, p.createdAt) " +
+    @Query("select new lechat.server.domain.post.controller.response.GetAllPostsRes(" +
+            "p.id, p.member.name, p.title, p.content, p.createdAt, " +
+            "case when p.member.id = :memberId then true else false end) " +
             "from Post p " +
             "where p.course.id = :courseId")
-    List<GetAllPostsRes> findByCourseId(@Param("courseId") Long courseId);
+    List<GetAllPostsRes> findByCourseId(@Param("courseId") Long courseId, @Param("memberId") Long memberId);
+
 }

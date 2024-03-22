@@ -8,6 +8,10 @@ import lombok.Getter;
 public class UpdatePostReq {
 
     @NotBlank
+    @Schema(example = "What is the title?")
+    private String title;
+
+    @NotBlank
     @Schema(example = "What is the answer for this question?")
     private String content;
 }
