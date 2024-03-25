@@ -7,6 +7,9 @@ import lechat.server.domain.post.controller.request.CreatePostReq;
 import lechat.server.domain.post.controller.request.UpdatePostReq;
 import lechat.server.domain.post.controller.response.CreatePostRes;
 import lechat.server.domain.post.controller.response.GetAllPostsRes;
+import lechat.server.domain.post.controller.response.GetSinglePostRes;
+import lechat.server.domain.post.entity.Comment;
+import lechat.server.domain.post.entity.Post;
 import lechat.server.domain.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -50,6 +53,14 @@ public class PostController {
     @Operation(summary = "Get all posts for course")
     public ResponseEntity<List<GetAllPostsRes>> getAllPosts(@PathVariable(name = "courseId") Long courseId) {
         List<GetAllPostsRes> responseBody = postService.getAllPosts(courseId, 1L);
+        return ResponseEntity.ok().body(responseBody);
+    }
+
+    @GetMapping("/posts/single/{postId}")
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Get single post")
+    public ResponseEntity<GetSinglePostRes> getSinglePost(@PathVariable(name = "postId") Long postId) {
+        GetSinglePostRes responseBody = postService.getSinglePost(postId, 1L);
         return ResponseEntity.ok().body(responseBody);
     }
 }

@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 
 @Getter
 public class GetAllPostsRes {
+
     private Long postId;
     private String author;
     private String title;

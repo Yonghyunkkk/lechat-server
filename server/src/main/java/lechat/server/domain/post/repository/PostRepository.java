@@ -16,5 +16,4 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             "from Post p " +
             "where p.course.id = :courseId")
     List<GetAllPostsRes> findByCourseId(@Param("courseId") Long courseId, @Param("memberId") Long memberId);
-
 }
