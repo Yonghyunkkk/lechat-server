@@ -2,6 +2,9 @@ package lechat.server.domain.member.entity;
 
 import jakarta.persistence.*;
 import lechat.server.domain.auth.entity.EmailValidation;
+import lechat.server.domain.post.entity.Comment;
+import lechat.server.domain.post.entity.Post;
+import lechat.server.domain.post.entity.ReplyComment;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,6 +13,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -25,14 +29,30 @@ public class Member implements UserDetails {
     @Id @GeneratedValue
     private Long id;
 
+    @Column(name = "name", nullable = false, length = 100)
     private String name;
 
+    @Column(name = "email", nullable = false, length = 100)
     private String email;
 
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToMany(mappedBy = "member")
+    @Builder.Default
+    private List<Post> posts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    @Builder.Default
+    private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    @Builder.Default
+    private List<ReplyComment> replyComments = new ArrayList<>();
+
 
 //    @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
 //    @JoinColumn(name = "email_validation_id")
@@ -72,4 +92,35 @@ public class Member implements UserDetails {
 //        this.emailValidation = emailValidation;
 //        emailValidation.setMember(this);
 //    }
+
+    public static Member createMember(
+            String name,
+            String email,
+            String password,
+            Role role
+    ) {
+        Member member = Member.builder()
+                .name(name)
+                .email(email)
+                .password(password)
+                .role(role)
+                .build();
+
+        return member;
+    }
+
+    public void addPost(Post post) {
+        this.posts.add(post);
+        post.setMember(this);
+    }
+
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+        comment.setMember(this);
+    }
+
+    public void addReplyComment(ReplyComment replyComment) {
+        this.replyComments.add(replyComment);
+        replyComment.setMember(this);
+    }
 }

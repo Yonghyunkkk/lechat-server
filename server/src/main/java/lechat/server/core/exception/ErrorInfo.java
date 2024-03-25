@@ -26,15 +26,17 @@ public enum ErrorInfo {
     FAVORITE_COURSE_ALREADY_EXIST(400, "FAVORITE_COURSE_ALREADY_EXIST", "This course is already a favorite course"),
 
     /**
-     * Course Review
+     * Post
      */
-    REVIEW_NOT_FOUND(400, "REVIEW_NOT_FOUND", "Review with the given id is not found"),
-    REVIEW_ALREADY_EXIST(400, "REVIEW_ALREADY_EXIST", "Member has already left a review for course"),
-    TOTAL_RATIO_EXCEEDS(400, "TOTAL_RATIO_EXCEEDS", "Total ratio has exceeded 100"),
+    POST_NOT_FOUND(400, "POST_NOT_FOUND", "Post with the given id is not found"),
     /**
-     * Subclass
+     * Comment
      */
-    SUBCLASS_NOT_FOUND(400, "SUBCLASS_NOT_FOUND", "Subclass with given courseId is not found");
+    COMMENT_NOT_FOUND(400, "COMMENT_NOT_FOUND", "Comment with given id is not found"),
+    /**
+     * Reply Comment
+     */
+    REPLY_COMMENT_NOT_FOUND(400, "REPLY_COMMENT_NOT_FOUND", "Reply comment with given id is not found");
 
 
     private final int statusCode;
