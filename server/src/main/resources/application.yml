@@ -15,18 +15,7 @@ spring:
     #        default_batch_fetch_size: 100
     open-in-view: false
 
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: yonghyunkwon98@gmail.com
-    password: pqoc lssl xvji xsmm
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            required: true
-            enable: true
+
 
 logging.level:
   org.hibernate.SQL:
